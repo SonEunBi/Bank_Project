@@ -11,7 +11,11 @@ import folium
 from folium import plugins
 print(folium.__version__)
 import re
+import googlemaps
+import webbrowser
 
+my_key = "AIzaSyAPA6edshMP0QnrmGKdyHeWhdbGv9id4yM"
+maps = googlemaps.Client(key=my_key)  # my_key값 입력
 
 # with open('2021_ALL_BNK_STOR_BASE_change.csv', encoding='cp949',usecols=['가로위치좌표','세로위치좌표']) as csv_file:
 #     csv_data = csv.reader(csv_file)
@@ -30,6 +34,7 @@ df = df.dropna()
 df.index=range(len(df))
 df.tail()
 
+# 좌표계 변환 함수
 def project_array(coord, p1_type, p2_type):
     """
     좌표계 변환 함수
@@ -75,16 +80,16 @@ for _, row in sample.iterrows():
     lat, lon = row['위도'], row['경도']
     folium.Marker(location=[lat, lon]).add_to(m)
 
-folium.Choropleth(
-    geo_data = geo_json,
-    name = 'choropleth',
-    data = df,
-    columns=['위도','경도'],
-    key_on='feature.properties.name',
-    fill_color = 'YlGn',
-    fill_opacity = 0.7,
-    line_opacity = 1,
-    legend_name = 'Population (people)'
-).add_to(m)
+# folium.Choropleth(
+#     geo_data = geo_json,
+#     name = 'choropleth',
+#     data = df,
+#     columns=['위도','경도'],
+#     key_on='feature.properties.name',
+#     fill_color = 'YlGn',
+#     fill_opacity = 0.7,
+#     line_opacity = 1,
+#     legend_name = 'Population (people)'
+# ).add_to(m)
 
 m
